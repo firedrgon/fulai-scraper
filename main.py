@@ -16,18 +16,21 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 logger_file_handler.setFormatter(formatter)
 logger.addHandler(logger_file_handler)
 
-try:
-    SOME_SECRET = os.environ["SOME_SECRET"]
-except KeyError:
-    SOME_SECRET = "Token not available!"
-    # logger.info("Token not available!")
-    # raise
-
 if __name__ == "__main__":
-    logger.info(f"Token value: {SOME_SECRET}")
-
-    r = requests.get('https://weather.talkpython.fm/api/weather/?city=Berlin&country=DE')
+    token = os.environ["TOKEN"]
+    headers = {
+        'Host': 'api.fulaizhitou.com',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/98.0.4758.102 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) '
+                      'WindowsWechat(0x63090217) XWEB/6763 Flue',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'zh-CN,zh',
+        'token': token
+    }
+    r = requests.get('https://api.fulaizhitou.com/tools/task/sign', headers=headers)
     if r.status_code == 200:
         data = r.json()
-        temperature = data["forecast"]["temp"]
-        logger.info(f'Weather in Berlin: {temperature}')
+        code = data["code"]
+        dou = data["dou"]
+        logger.info(f'code: {code}, dou: {dou}')
