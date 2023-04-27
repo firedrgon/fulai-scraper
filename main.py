@@ -16,8 +16,12 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 logger_file_handler.setFormatter(formatter)
 logger.addHandler(logger_file_handler)
 
-if __name__ == "__main__":
+try:
     token = os.environ["TOKEN"]
+except KeyError:
+    logger.info("Token not available!")
+
+if __name__ == "__main__":
     headers = {
         'Host': 'api.fulaizhitou.com',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
