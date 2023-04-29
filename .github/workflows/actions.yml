@@ -2,7 +2,7 @@ name: run main.py
 
 on:
   schedule:
-    - cron: '10 */12 * * *' # At 00:00 on Monday
+    - cron: '10 */6 * * *' # At 00:00 on Monday
 #  push:
 #    branches:
 #    - main
